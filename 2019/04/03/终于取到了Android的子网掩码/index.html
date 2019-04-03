@@ -81,13 +81,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dingxian.Ye">
-<meta property="og:url" content="http://dingxianye.me/index.html">
+<meta name="description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="终于取到了Android的子网掩码">
+<meta property="og:url" content="http://dingxianye.me/2019/04/03/终于取到了Android的子网掩码/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
+<meta property="og:description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-03T15:59:14.917Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dingxian.Ye">
+<meta name="twitter:title" content="终于取到了Android的子网掩码">
+<meta name="twitter:description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
 
 
 
@@ -117,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://dingxianye.me/">
+  <link rel="canonical" href="http://dingxianye.me/2019/04/03/终于取到了Android的子网掩码/">
 
 
 
 
 
-  <title>Dingxian.Ye</title>
+  <title>终于取到了Android的子网掩码 | Dingxian.Ye</title>
   
 
 
@@ -142,8 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -216,9 +219,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -248,9 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/03/终于取到了Android的子网掩码/" itemprop="url">终于取到了Android的子网掩码</a></h1>
+          <h1 class="post-title" itemprop="name headline">终于取到了Android的子网掩码</h1>
         
 
         <div class="post-meta">
@@ -310,19 +311,24 @@
       
 
       
-        
-          <p>最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。</p>
+        <p>最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。</p>
 <p>最常见的一般就是让你去拿到<code>WifiManager</code>，再拿到<code>DhcpInfo</code>，最后通过<code>intToIp(dhcpInfo.netmask)</code>拿到掩码，但是我告诉你，这种方法拿到的掩码往往是<code>0.0.0.0</code>，错的。至于为什么拿不到，google上也有很多讨论，可以自行搜索，似乎是一个延续了很多版本的bug，而且目前至少8.x上还是有问题的。</p>
 <p>另一种是使用反射通过<code>ConnectivityManager</code>的hide方法<code>getActiveLinkProperties</code>拿到ip地址，再通过形如<code>n/xxx.xxx.xxx.xxx</code>的数据中<code>n</code>去算掩码（n表明的是掩码中前n位是1），但是我告诉你，这种方法拿到的ip地址往往是<code>/xxx.xxx.xxx.xxx</code>，没有<code>n</code>。</p>
 <p>那应该怎么办？我找到了一种好方法，点进来看吧。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/03/终于取到了Android的子网掩码/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
+<p><strong>其实方法很简单，我们发现通过linux提供的<code>ifconfig</code>在shell中是完全可以拿到子网掩码的，所以解决方案也就有了。</strong></p>
+<ol>
+<li>Android Manifest中添加<code>INTERNET</code>的权限（必须添加，否则ifconfig无法执行）</li>
+<li><code>Runtime.getRuntime().exec(new String[] { &quot;ifconfig&quot; })</code>，再解析结果，拿出子网掩码</li>
+</ol>
+<p>具体的方法可以参考我的一个demo，有兴趣的朋友可以帮我改进demo里的解析方法，因为解析方法是不并保证适配了所有版本的系统（我是在8.x上测试的），demo地址如下：</p>
+<p><a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/DXNetworkUtil.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/DXNetworkUtil.java</a></p>
+<p>解析出来的每个网络连接的结果会放到下面的结构中<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DXIfconfig</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String inetAddr; <span class="comment">// ip</span></span><br><span class="line">    <span class="keyword">public</span> String bcast;    <span class="comment">// gateway</span></span><br><span class="line">    <span class="keyword">public</span> String mask;     <span class="comment">// netmask</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们之后就可以通过ip去拿到对应的子网掩码干活儿了。</p>
+<blockquote>
+<p>对于文章最前面提到的无效方法，也可以参看<a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/BadNetworkUtilDemo.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/BadNetworkUtilDemo.java</a>获得代码。</p>
+</blockquote>
+
       
     </div>
     
@@ -339,147 +345,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2019/03/16/BlackBerry派/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Derek">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/icon.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dingxian.Ye">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/16/BlackBerry派/" itemprop="url">BlackBerry派</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T18:55:33+08:00">
-                2019-03-16
-              </time>
+              <a href="/2019/03/16/BlackBerry派/" rel="next" title="BlackBerry派">
+                <i class="fa fa-chevron-left"></i> BlackBerry派
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/03/16/BlackBerry派/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/16/BlackBerry派/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>BlackBerry，黑莓（BB）。<br>第一次知道这个名字是一种手机，全键盘，看起来很别致，很有现代感或者说科技感。<br>BB的历史不说了，我也说不清楚，不过BB现在被TCL收购了，而且最近也还出过新手机，最新的是<a href="https://blackberrymobile.com/cn/product/blackberry-key2/" target="_blank" rel="noopener">BB Key2，Android系统，全键盘直板，看起来还不错</a>，链接可以去BB官网，有3D模型可以看，PERFECT，整体机器看起来还是很不错的，但愿能一直走下去。</p>
-<p><img src="http://www.berrylink.cn/wp-content/uploads/2019/02/blackberry-key2-red-silver-black-1-16p7o.jpg" alt="正面"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/16/BlackBerry派/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -489,144 +376,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2018/10/28/starter/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Derek">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/icon.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dingxian.Ye">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/28/starter/" itemprop="url">开篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-28T23:55:06+08:00">
-                2018-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/28/starter/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/28/starter/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我想你看到“开篇”这种标题的文件，应该不会点来的……</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/28/starter/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -634,6 +388,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -839,6 +600,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
