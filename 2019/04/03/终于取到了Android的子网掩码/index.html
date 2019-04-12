@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
+<meta name="description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="终于取到了Android的子网掩码">
 <meta property="og:url" content="http://dingxianye.me/2019/04/03/终于取到了Android的子网掩码/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
-<meta property="og:description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
+<meta property="og:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-03T15:59:14.917Z">
+<meta property="og:updated_time" content="2019-04-12T15:19:10.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="终于取到了Android的子网掩码">
-<meta name="twitter:description" content="最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的">
+<meta name="twitter:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
 
 
 
@@ -311,7 +311,7 @@
       
 
       
-        <p>最近工作上有个需求是拿到Android手机的子网掩码（Subnet Mask、Netmask、Mask），但是我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。</p>
+        <p>本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。</p>
 <p>最常见的一般就是让你去拿到<code>WifiManager</code>，再拿到<code>DhcpInfo</code>，最后通过<code>intToIp(dhcpInfo.netmask)</code>拿到掩码，但是我告诉你，这种方法拿到的掩码往往是<code>0.0.0.0</code>，错的。至于为什么拿不到，google上也有很多讨论，可以自行搜索，似乎是一个延续了很多版本的bug，而且目前至少8.x上还是有问题的。</p>
 <p>另一种是使用反射通过<code>ConnectivityManager</code>的hide方法<code>getActiveLinkProperties</code>拿到ip地址，再通过形如<code>n/xxx.xxx.xxx.xxx</code>的数据中<code>n</code>去算掩码（n表明的是掩码中前n位是1），但是我告诉你，这种方法拿到的ip地址往往是<code>/xxx.xxx.xxx.xxx</code>，没有<code>n</code>。</p>
 <p>那应该怎么办？我找到了一种好方法，点进来看吧。</p>
