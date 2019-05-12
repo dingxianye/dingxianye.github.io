@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="Dingxian.Ye">
 <meta property="og:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-12T15:19:10.690Z">
+<meta property="og:updated_time" content="2019-05-12T03:20:37.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="终于取到了Android的子网掩码">
 <meta name="twitter:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
@@ -321,12 +321,11 @@
 <li>Android Manifest中添加<code>INTERNET</code>的权限（必须添加，否则ifconfig无法执行）</li>
 <li><code>Runtime.getRuntime().exec(new String[] { &quot;ifconfig&quot; })</code>，再解析结果，拿出子网掩码</li>
 </ol>
-<p>具体的方法可以参考我的一个demo，有兴趣的朋友可以帮我改进demo里的解析方法，因为解析方法是不并保证适配了所有版本的系统（我是在8.x上测试的），demo地址如下：</p>
-<p><a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/DXNetworkUtil.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/DXNetworkUtil.java</a></p>
+<p>具体的方法可以参考我的一个demo，有兴趣的朋友可以帮我改进demo里的解析方法，因为解析方法是不并保证适配了所有版本的系统（我是在8.x上测试的），demo地址如下：<br><a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/DxNetworkUtil.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/DxNetworkUtil.java</a></p>
 <p>解析出来的每个网络连接的结果会放到下面的结构中<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DXIfconfig</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String inetAddr; <span class="comment">// ip</span></span><br><span class="line">    <span class="keyword">public</span> String bcast;    <span class="comment">// gateway</span></span><br><span class="line">    <span class="keyword">public</span> String mask;     <span class="comment">// netmask</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>我们之后就可以通过ip去拿到对应的子网掩码干活儿了。</p>
 <blockquote>
-<p>对于文章最前面提到的无效方法，也可以参看<a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/BadNetworkUtilDemo.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/BadNetworkUtilDemo.java</a>获得代码。</p>
+<p>对于文章最前面提到的无效方法，也可以参看<br><a href="https://github.com/dingxianye/Demo/blob/master/app/src/main/java/me/dingxianye/demo/network/BadNetworkCase.java" target="_blank" rel="noopener">src/main/java/me/dingxianye/demo/network/BadNetworkCase.java</a>获得代码。</p>
 </blockquote>
 
       
