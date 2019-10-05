@@ -81,13 +81,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Dingxian.Ye">
-<meta property="og:url" content="http://dingxianye.me/index.html">
+<meta name="description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，带配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0x1 Linux内核学习-源码索引">
+<meta property="og:url" content="http://dingxianye.me/2019/10/06/0x1-Linux-KernelStarting-Index/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
+<meta property="og:description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，带配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-05T16:43:03.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dingxian.Ye">
+<meta name="twitter:title" content="0x1 Linux内核学习-源码索引">
+<meta name="twitter:description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，带配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且">
 
 
 
@@ -117,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://dingxianye.me/">
+  <link rel="canonical" href="http://dingxianye.me/2019/10/06/0x1-Linux-KernelStarting-Index/">
 
 
 
 
 
-  <title>Dingxian.Ye</title>
+  <title>0x1 Linux内核学习-源码索引 | Dingxian.Ye</title>
   
 
 
@@ -142,8 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -216,9 +219,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -248,9 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/06/0x1-Linux-KernelStarting-Index/" itemprop="url">0x1 Linux内核学习-源码索引</a></h1>
+          <h1 class="post-title" itemprop="name headline">0x1 Linux内核学习-源码索引</h1>
         
 
         <div class="post-meta">
@@ -310,9 +311,7 @@
       
 
       
-        
-          
-            <p>我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。</p>
+        <p>我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。</p>
 <p>Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，带配合源码一起。这是我想象的，网上看起来也有这么说的。</p>
 <p>内核源码就很重要了，如果自己改动过，源码还要能编译，并且能把某个发行版本的内核替换掉（我这里使用的是Ubuntu 18.04），这样就能在本地看到自己的改动了。</p>
 <h1 id="内核源码下载-amp-编译-amp-更换"><a href="#内核源码下载-amp-编译-amp-更换" class="headerlink" title="内核源码下载 &amp; 编译 &amp; 更换"></a>内核源码下载 &amp; 编译 &amp; 更换</h1><p>我这边下载的是5.3.0的内核版本（当时下载时是最新Stable版本），在 <a href="https://www.kernel.org" target="_blank" rel="noopener">www.kernel.org</a> 上找找，就能找到archive下载，或者git clone。</p>
@@ -342,8 +341,6 @@
 <h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>这是我开始进行Linux等操作系统相关学习的记录，后面会对一些类似系统进行比较，如MacOS、Android等。</p>
 <p>相信操作系统，尤其是移动端操作系统，在未来几年内，会逐渐在国内形成技术战场，世界操作系统史上，应该会有中国一笔的。所以，更多的学习操作系统相关的知识，未来才能更好的跟大家一起好好的玩耍。</p>
 
-          
-        
       
     </div>
     
@@ -360,149 +357,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2019/04/03/终于取到了Android的子网掩码/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Derek">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/icon.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dingxian.Ye">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/03/终于取到了Android的子网掩码/" itemprop="url">终于取到了Android的子网掩码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T23:54:55+08:00">
-                2019-04-03
-              </time>
+              <a href="/2019/04/03/终于取到了Android的子网掩码/" rel="next" title="终于取到了Android的子网掩码">
+                <i class="fa fa-chevron-left"></i> 终于取到了Android的子网掩码
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/03/终于取到了Android的子网掩码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/03/终于取到了Android的子网掩码/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。</p>
-<p>最常见的一般就是让你去拿到<code>WifiManager</code>，再拿到<code>DhcpInfo</code>，最后通过<code>intToIp(dhcpInfo.netmask)</code>拿到掩码，但是我告诉你，这种方法拿到的掩码往往是<code>0.0.0.0</code>，错的。至于为什么拿不到，google上也有很多讨论，可以自行搜索，似乎是一个延续了很多版本的bug，而且目前至少8.x上还是有问题的。</p>
-<p>另一种是使用反射通过<code>ConnectivityManager</code>的hide方法<code>getActiveLinkProperties</code>拿到ip地址，再通过形如<code>n/xxx.xxx.xxx.xxx</code>的数据中<code>n</code>去算掩码（n表明的是掩码中前n位是1），但是我告诉你，这种方法拿到的ip地址往往是<code>/xxx.xxx.xxx.xxx</code>，没有<code>n</code>。</p>
-<p>那应该怎么办？我找到了一种好方法，点进来看吧。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/03/终于取到了Android的子网掩码/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -512,286 +388,25 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2019/03/16/BlackBerry派/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Derek">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/icon.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dingxian.Ye">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/16/BlackBerry派/" itemprop="url">BlackBerry派</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T18:55:33+08:00">
-                2019-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/03/16/BlackBerry派/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/16/BlackBerry派/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>BlackBerry，黑莓（BB）。<br>第一次知道这个名字是一种手机，全键盘，看起来很别致，很有现代感或者说科技感。<br>BB的历史不说了，我也说不清楚，不过BB现在被TCL收购了，而且最近也还出过新手机，最新的是<a href="https://blackberrymobile.com/cn/product/blackberry-key2/" target="_blank" rel="noopener">BB Key2，Android系统，全键盘直板，看起来还不错</a>，链接可以去BB官网，有3D模型可以看，PERFECT，整体机器看起来还是很不错的，但愿能一直走下去。</p>
-<p><img src="http://www.berrylink.cn/wp-content/uploads/2019/02/blackberry-key2-red-silver-black-1-16p7o.jpg" alt="正面"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/16/BlackBerry派/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2018/10/28/starter/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Derek">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/icon.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dingxian.Ye">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/28/starter/" itemprop="url">开篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-28T23:55:06+08:00">
-                2018-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/28/starter/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/28/starter/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我想你看到“开篇”这种标题的文件，应该不会点来的……</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/28/starter/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
   
 
 
-          </div>
-          
-
-
-          
 
         </div>
         
@@ -812,8 +427,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -864,6 +488,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内核源码下载-amp-编译-amp-更换"><span class="nav-number">1.</span> <span class="nav-text">内核源码下载 &amp; 编译 &amp; 更换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码索引"><span class="nav-number">2.</span> <span class="nav-text">源码索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程作业"><span class="nav-number">3.</span> <span class="nav-text">远程作业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -997,6 +637,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
