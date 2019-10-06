@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dingxianye.me/"/>
-  <updated>2019-10-06T17:38:41.370Z</updated>
+  <updated>2019-10-06T18:41:43.668Z</updated>
   <id>http://dingxianye.me/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Linux内核-0x2 概念名词等</title>
-    <link href="http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts-md/"/>
-    <id>http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts-md/</id>
+    <link href="http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts/"/>
+    <id>http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts/</id>
     <published>2019-10-06T12:20:13.000Z</published>
-    <updated>2019-10-06T17:38:41.370Z</updated>
+    <updated>2019-10-06T18:41:43.668Z</updated>
     
     <content type="html"><![CDATA[<p>我觉得吧，想混一个领域，这个领域的行话，比如名词、基本概念、历史等，总要是了解和理解的。这里我会收集整理一些Linux内核和操作系统相关的概念名词等内容。好让我们看起来像是在这个领域混饭吃的人一样，毕竟我们的领域，会吹会说还是很重要的。</p><p>内容主要包含UNIX历史上的行话，各类看起来感觉很看不懂的名词和它们的关系，内核相关的概念，操作系统相关的概念等，推荐一些我在学习过程中看着还比较好的书。</p><p>当我看到新的，或者收集到有趣的，就会不断的扩充进来，可能会变得很长很长，毕竟发展了几十年的领域，有太多有趣的东西了。</p><a id="more"></a><h1 id="领域内的行话"><a href="#领域内的行话" class="headerlink" title="领域内的行话"></a>领域内的行话</h1><ul><li>UNIX的设计应该是提供机制而不是策略 <sup><a href="#ref-1">[1]</a></sup></li></ul><h1 id="POSIX标准"><a href="#POSIX标准" class="headerlink" title="POSIX标准"></a>POSIX标准</h1><p>POSIX的英文全称是<i>Portable Operating System Interface of UNIX</i>，中文译『可移植操作系统接口』。</p><p>IEEE的一组标准组成，目标是提供一套大体上基于Unix的可移植操作系统标准。Linux尽力与POSIX和SUSv3兼容。早期的POSIX标准就是依照早期Unix系统的接口建立的。<sup><a href="#ref-1">[1]</a></sup></p><h1 id="内核类型"><a href="#内核类型" class="headerlink" title="内核类型"></a>内核类型</h1><p><strong>宏内核，微内核，混合内核</strong>（部分微内核、部分宏内核）。</p><p>对于内核类型，目前我看到的结论大概是，现代操作系统好像不能完全说是属于哪种类型的，可能都是混合型的，或者更偏向某种类型。另外是，微内核在实用操作系统上是比较少见的，更多是在科研阶段或教学场景下的。</p><p><strong>宏内核</strong>类型中基本所有子系统如内存管理、文件系统、设备驱动等，都是在内核中的。这也是大部分操作系统内核构建的传统方法。<sup><a href="#ref-2">[2]</a></sup></p><p><strong>微内核</strong>类型下只有最基本的功能在中心内核中实现，其它功能如文件系统、内存管理等可能在独立的进程中运行，并与中心内核进行通信<sup><a href="#ref-2">[2]</a></sup>。这种类型在各组件间的通信需要消耗CP宏内核系统来说会更耗费一些。</p><p>我了解到过的系统，内核类型大概是这样的</p><ul><li>Linux：宏内核</li><li>MacOS：Mach（微）+ BSD（宏），混合内核</li><li>Windows：或许是混合内核，Windows在内核的定义上或许不太能按UNIX类的系统来分</li><li>Minix：微内核，作为教育用的操作系统</li></ul><p>我参考的一些文章如下：</p><ul><li><a href="https://itsfoss.com/mac-linux-difference/" target="_blank" rel="noopener">What is the Difference Between the macOS and Linux Kernels</a>，这边有个翻译版本 <a href="https://www.linuxprobe.com/linux-kernels-macos.html" target="_blank" rel="noopener">MacOS和Linux内核的区别</a></li><li><a href="https://blog.csdn.net/broadview2006/article/details/4171397" target="_blank" rel="noopener">探究Windows内核你知多少</a>，这个文章排版比较乱，内容感觉还是有一定道理的</li></ul><h1 id="书籍推荐"><a href="#书籍推荐" class="headerlink" title="书籍推荐"></a>书籍推荐</h1><ul><li>《Linux内核设计与实现》<sup><a href="#ref-1">[1]</a></sup> 某些高校会用来当教材，可以看下豆瓣的评价，我觉得这本书是Linux内核入门的基本书籍，会带着你在内核核心部件的代码上走一圈。</li></ul><hr><p><a name="ref-1"><sup>[1]</sup> Linux内核设计与实现（原书第3版）/（美）拉夫（Love，R）著；陈莉君，康华译.——北京：机械工业出版社，2011.6</a><br><a name="ref-2"><sup>[2]</sup> 深入Linux内核架构 / (德) 莫尔勒（Mauerer, W.）著；郭旭译.——北京：人展邮电出版社，2010.6</a></p>]]></content>
     
