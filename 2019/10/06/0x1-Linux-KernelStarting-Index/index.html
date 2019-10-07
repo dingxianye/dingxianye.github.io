@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux内核源码,">
 
 
 
@@ -82,13 +82,14 @@
 
 
 <meta name="description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且能">
+<meta name="keywords" content="Linux内核源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux内核-0x1 源码索引">
 <meta property="og:url" content="http://dingxianye.me/2019/10/06/0x1-Linux-KernelStarting-Index/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
 <meta property="og:description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-06T12:18:30.561Z">
+<meta property="og:updated_time" content="2019-10-07T05:14:38.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux内核-0x1 源码索引">
 <meta name="twitter:description" content="我们时常在说的Linux，广义上是说的像Ubuntu、Redhat、Deepin之类的发行版操作系统，狭义上（或者更准确的说）Linux只是一个操作系统内核，具备如进程调度、内存管理、设备控制等功能。 Linux学习从类似《深入Linux内核架构》《Linux内核设计与实现》等书籍入手，配合源码一起。这是我想象的，网上看起来也有这么说的。 内核源码就很重要了，如果自己改动过，源码还要能编译，并且能">
@@ -188,6 +189,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
           </a>
         </li>
       
@@ -341,8 +352,8 @@
 <p>这样，我可以通过 <a href="http://ubuntu-ip:8080/linux/" target="_blank" rel="noopener">http://ubuntu-ip:8080/linux/</a> 去访问Global搭建起的源码索引主页了。</p>
 <h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>这是我开始进行Linux等操作系统相关学习的记录，后面会对一些类似系统进行比较，如MacOS、Android等。</p>
 <p>相信操作系统，尤其是移动端操作系统，在未来几年内，会逐渐在国内形成技术战场，世界操作系统史上，应该会有中国一笔的。所以，更多的学习操作系统相关的知识，未来才能更好的跟大家一起好好的玩耍。</p>
-<h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>在阅读《Linux内核设计与实现》时发现，我使用的内核源码版本是5.3，和书上使用的2.x版本相关太大了，不方便使用，故git clone了2.6.39.y的版本，并且Global也切换掉了。</p>
-<p>在切换过程中直接kill掉了htags-server的进程，结果端口占用，使用如下方法可以查询端口占用进程：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -tln | grep 8000    <span class="comment"># 查看端口是否占用</span></span><br><span class="line">lsof -i:8000                <span class="comment"># 查看占用端口的进程</span></span><br><span class="line"><span class="comment"># kill xxx 就行了</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="附"><a href="#附" class="headerlink" title="附"></a>附</h1><p>在阅读《Linux内核设计与实现》时发现，我使用的内核源码版本是5.3，和书上使用的2.x版本相差太大了，极不方便学习使用，故git clone了2.6.39.y的版本，并且Global也切换掉了。</p>
+<p>在htags-server切换过程中直接kill掉进程，结果端口占用，使用如下方法可以查询端口占用进程并完全kill掉：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -tln | grep 8000    <span class="comment"># 查看端口是否占用</span></span><br><span class="line">lsof -i:8000                <span class="comment"># 查看占用端口的进程</span></span><br><span class="line"><span class="comment"># kill xxx 就行了</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -357,6 +368,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux内核源码/" rel="tag"># Linux内核源码</a>
+          
+        </div>
       
 
       
@@ -469,6 +486,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

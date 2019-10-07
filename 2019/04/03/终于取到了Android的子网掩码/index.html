@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="子网掩码,Android网络,">
 
 
 
@@ -82,13 +82,14 @@
 
 
 <meta name="description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
+<meta name="keywords" content="子网掩码,Android网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="终于取到了Android的子网掩码">
 <meta property="og:url" content="http://dingxianye.me/2019/04/03/终于取到了Android的子网掩码/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
 <meta property="og:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-12T03:20:37.063Z">
+<meta property="og:updated_time" content="2019-10-07T05:16:38.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="终于取到了Android的子网掩码">
 <meta name="twitter:description" content="本来以为取Android手机的子网掩码（Subnet Mask、Netmask、Mask）还比较容易，但后来我发现这事儿并不简单，因为无论是baidu还是google，给出来的答案都是没什么用的。 最常见的一般就是让你去拿到WifiManager，再拿到DhcpInfo，最后通过intToIp(dhcpInfo.netmask)拿到掩码，但是我告诉你，这种方法拿到的掩码往往是0.0.0.0，错的。">
@@ -188,6 +189,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
           </a>
         </li>
       
@@ -342,6 +353,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/子网掩码/" rel="tag"># 子网掩码</a>
+          
+            <a href="/tags/Android网络/" rel="tag"># Android网络</a>
+          
+        </div>
+      
 
       
       
@@ -444,6 +463,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
