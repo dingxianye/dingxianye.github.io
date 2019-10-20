@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统内核,内核架构,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dingxian.Ye" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="从上篇文章讨论宏内核/微内核/混合内核来，读了些《深入解析Mac OS X &amp;amp; iOS操作系统》[1]内核架构那一章，其中对不同类型的内核有些解读。 除此之外，内核还有一些重要的内容如用户态/内核态的转换，那么又涉及到系统调用和内核陷入等。这些能力所依赖的权限，其安全保障是由硬件实现的，所以又涉及到了不同CPU架构的不同实现，还是比较复杂的，不过从宏观框架来看还是可以看懂的，一些思考和记录">
+<meta name="keywords" content="操作系统内核,内核架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux内核-0x3 内核架构">
+<meta property="og:url" content="http://dingxianye.me/2019/10/20/0x3-Linux-KernelStarting-KernelArch/index.html">
+<meta property="og:site_name" content="Dingxian.Ye">
+<meta property="og:description" content="从上篇文章讨论宏内核/微内核/混合内核来，读了些《深入解析Mac OS X &amp;amp; iOS操作系统》[1]内核架构那一章，其中对不同类型的内核有些解读。 除此之外，内核还有一些重要的内容如用户态/内核态的转换，那么又涉及到系统调用和内核陷入等。这些能力所依赖的权限，其安全保障是由硬件实现的，所以又涉及到了不同CPU架构的不同实现，还是比较复杂的，不过从宏观框架来看还是可以看懂的，一些思考和记录">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/dingxianye/resources/blob/master/0x3-Linux-KernelStarting-KernelArch/WX20191020-202915.jpg?raw=true">
+<meta property="og:image" content="https://github.com/dingxianye/resources/blob/master/0x3-Linux-KernelStarting-KernelArch/WX20191020-211930.jpg?raw=true">
+<meta property="og:updated_time" content="2019-10-20T13:43:48.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux内核-0x3 内核架构">
+<meta name="twitter:description" content="从上篇文章讨论宏内核/微内核/混合内核来，读了些《深入解析Mac OS X &amp;amp; iOS操作系统》[1]内核架构那一章，其中对不同类型的内核有些解读。 除此之外，内核还有一些重要的内容如用户态/内核态的转换，那么又涉及到系统调用和内核陷入等。这些能力所依赖的权限，其安全保障是由硬件实现的，所以又涉及到了不同CPU架构的不同实现，还是比较复杂的，不过从宏观框架来看还是可以看懂的，一些思考和记录">
+<meta name="twitter:image" content="https://github.com/dingxianye/resources/blob/master/0x3-Linux-KernelStarting-KernelArch/WX20191020-202915.jpg?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://dingxianye.me/2019/10/20/0x3-Linux-KernelStarting-KernelArch/">
+
+
+
+
+
+  <title>Linux内核-0x3 内核架构 | Dingxian.Ye</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dingxian.Ye</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2019/10/20/0x3-Linux-KernelStarting-KernelArch/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Derek">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dingxian.Ye">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux内核-0x3 内核架构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-20T13:13:41+08:00">
+                2019-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/20/0x3-Linux-KernelStarting-KernelArch/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/20/0x3-Linux-KernelStarting-KernelArch/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从<a href="/2019/10/06/0x2-Linux-KernelStarting-Concepts/">上篇文章</a>讨论宏内核/微内核/混合内核来，读了些《深入解析Mac OS X &amp; iOS操作系统》<sup><a href="#ref-1">[1]</a></sup>内核架构那一章，其中对不同类型的内核有些解读。</p>
+<p>除此之外，内核还有一些重要的内容如用户态/内核态的转换，那么又涉及到系统调用和内核陷入等。这些能力所依赖的权限，其安全保障是由硬件实现的，所以又涉及到了不同CPU架构的不同实现，还是比较复杂的，不过从宏观框架来看还是可以看懂的，一些思考和记录于下。</p>
+<a id="more"></a>
+<h1 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h1><p>『内核是一个调度器，内核也是一个仲裁器（arbiter），内核提供安全服务（security service）。』<sup><a href="#ref-1">[1]</a></sup></p>
+<h2 id="宏内核架构"><a href="#宏内核架构" class="headerlink" title="宏内核架构"></a>宏内核架构</h2><p>UNIX/Linux采用的是宏内核（也称巨内核，monolithic），是目前使用非常广泛的内核架构，典型的架构图如下所示：</p>
+<p><img src="https://github.com/dingxianye/resources/blob/master/0x3-Linux-KernelStarting-KernelArch/WX20191020-202915.jpg?raw=true" alt="UNIX/Linux宏内核架构"></p>
+<p>图中可以看到，内核空间中包含了所有系统核心的功能内容，用户空间通过系统调用与内核功能进行沟通。这也是宏内核系统的特点，如果内核中有组件挂了，那整个系统都可能被拉挂。</p>
+<p>从这张图也可以看出，宏内核需要关注的重点是『网络系统』、『文件系统』、『进程内存』等。</p>
+<p>顺便吐槽一下，国内不少大学用的是国内某些老师出的教材，教材和讲课的重点都在进程调度、内存管理上，并非不好，但这样弱化了操作系统的全貌，或以为操作系统就是调度和内存管理，像UNIX类系统一个非常科学的做法『一切皆是文件』的思想就无法被学生学习到，而这个思想却是UNIX类系统甚至学习操作系统的都应该要有一定理解的。</p>
+<p>『一切皆是文件』大意是用文件去抽象了不同的设备，通过定义字设备、块设备等方法去统一了不同的硬件设备的对接。</p>
+<blockquote>
+<p>相关资料可以参看</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI4MTY5NTk4Ng==&amp;mid=2247488989&amp;idx=1&amp;sn=fa7d60019857e326a1b7593705fb3897&amp;source=41#wechat_redirect" target="_blank" rel="noopener">面试题：如何理解“UNIX里一切都是文件”这句话？</a></li>
+</ul>
+</blockquote>
+<h2 id="微内核架构"><a href="#微内核架构" class="headerlink" title="微内核架构"></a>微内核架构</h2><p>微内核架构大致如下所示：</p>
+<p><img src="https://github.com/dingxianye/resources/blob/master/0x3-Linux-KernelStarting-KernelArch/WX20191020-211930.jpg?raw=true" alt="微内核架构"></p>
+<p>图中看起来，宏内核中的组件被拆开，核心内容放在内核空间，其它都拆到了用户空间，使用内核会非常的小。拆到用户空间的模块也是独立开的。</p>
+<p>纯微内核的系统商业系统中应该是没有的，主要是因为微内核系统核心是通过『消息传递』的方式进行的，需要在不同组件之间进行内存拷贝及上下文切换来实现，效率相比宏内核要低不少，成为致命伤。</p>
+<p>但是微内核有一些优点，比如内核的正确性（验证）是比较容易的，独立组件出现故障一般只需要重启组件而不会宕机，独立组件对于不同硬件平台实现起来也是更容易的。</p>
+<h2 id="混合内核"><a href="#混合内核" class="headerlink" title="混合内核"></a>混合内核</h2><p>混合内核并非宏内核+微内核，而更像是内核中包含一个更小的核心，如MacOS其实是BSD包着Mach内核的，而BSD包起来产物就是MacOS的内核，叫XNU内核。</p>
+<p>所以混合内核的核心组件也都是在内核中的，跟宏内核从宏观上看起来是一样的，组件（都在内核中）挂了也会拖挂整个系统的，不像微内核那样很健壮（不在内核中的组件挂了可以重启恢复），但是混合构应该在维护上比如宏内核容易一些。</p>
+<h2 id="内核使用的内存"><a href="#内核使用的内存" class="headerlink" title="内核使用的内存"></a>内核使用的内存</h2><h1 id="态"><a href="#态" class="headerlink" title="态"></a>态</h1><h2 id="用户态、内核态、安全"><a href="#用户态、内核态、安全" class="headerlink" title="用户态、内核态、安全"></a>用户态、内核态、安全</h2><h2 id="态转换"><a href="#态转换" class="headerlink" title="态转换"></a>态转换</h2><h2 id="『结界』入口及处理"><a href="#『结界』入口及处理" class="headerlink" title="『结界』入口及处理"></a>『结界』入口及处理</h2><hr>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><a name="ref-1"><sup>[1]</sup> 深入解析Mac OS X and iOS操作系统 /（美）莱文（Levin，J.）著；郑思遥，房佩慈 译.——北京：清华大学出版社，2014</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统内核/" rel="tag"># 操作系统内核</a>
+          
+            <a href="/tags/内核架构/" rel="tag"># 内核架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/06/0x2-Linux-KernelStarting-Concepts/" rel="next" title="Linux内核-0x2 概念名词等">
+                <i class="fa fa-chevron-left"></i> Linux内核-0x2 概念名词等
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.png" alt="Derek">
+            
+              <p class="site-author-name" itemprop="name">Derek</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#架构"><span class="nav-number">1.</span> <span class="nav-text">架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#宏内核架构"><span class="nav-number">1.1.</span> <span class="nav-text">宏内核架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微内核架构"><span class="nav-number">1.2.</span> <span class="nav-text">微内核架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合内核"><span class="nav-number">1.3.</span> <span class="nav-text">混合内核</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核使用的内存"><span class="nav-number">1.4.</span> <span class="nav-text">内核使用的内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#态"><span class="nav-number">2.</span> <span class="nav-text">态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户态、内核态、安全"><span class="nav-number">2.1.</span> <span class="nav-text">用户态、内核态、安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#态转换"><span class="nav-number">2.2.</span> <span class="nav-text">态转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#『结界』入口及处理"><span class="nav-number">2.3.</span> <span class="nav-text">『结界』入口及处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Derek</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'Gk8NOyFzoqlPEhTyrANGucJx-gzGzoHsz',
+        appKey: 'xRt923KDRutpMP8GueYFQyc8',
+        placeholder: '快来向我提问',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'20' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
