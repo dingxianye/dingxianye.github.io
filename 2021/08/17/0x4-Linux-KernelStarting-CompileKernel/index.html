@@ -90,7 +90,7 @@
 <meta property="og:description" content="编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。 我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：123Linux localhos">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/dingxianye/resources/blob/master/0x4-Linux-KernelStarting-CompileKernel/makemenuconfig.png?raw=true">
-<meta property="og:updated_time" content="2021-08-18T13:53:33.040Z">
+<meta property="og:updated_time" content="2021-08-18T14:25:41.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux内核-0x4 编译Kernel">
 <meta name="twitter:description" content="编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。 我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：123Linux localhos">
@@ -353,6 +353,10 @@
 <h1 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h1><p>完成编译，重启就ok了，uname信息是<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux localhost.localdomain </span><br><span class="line">5.13.11 #3 SMP Tue Aug 17 20:16:22 CST 2021 </span><br><span class="line">x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p>
 <p>可以看到内核版本是 <code>5.13.11</code>。</p>
 <h1 id="dev"><a href="#dev" class="headerlink" title="dev"></a>dev</h1><p>网上说，一般用得多的是 arch 和 drivers 目录下的内容，我暂时不知道更多，边学边写。</p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>我为什么要编译内核？或者，编译内核的『新生代农民工』们为什么要编译内核？往往事情是先有需求，再有动作的，编译内核有什么样的需求，行业大佬们要做什么，我在网上找了找，一般是下面几种情况：</p>
+<p>1）支撑业务需要裁剪内核，添加变更驱动，添加变更功能；</p>
+<p>2）学习内核需要。</p>
+<p>对于支撑业务，在行业中内核会有些什么样的作用呢？什么样的业务诉求需要做内核的定制呢？这个后面继续学习。</p>
 
       
     </div>
@@ -528,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#download"><span class="nav-number">1.</span> <span class="nav-text">download</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-install"><span class="nav-number">2.</span> <span class="nav-text">yum install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-menuconfig"><span class="nav-number">3.</span> <span class="nav-text">make menuconfig</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make"><span class="nav-number">4.</span> <span class="nav-text">make</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reboot"><span class="nav-number">5.</span> <span class="nav-text">reboot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dev"><span class="nav-number">6.</span> <span class="nav-text">dev</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#download"><span class="nav-number">1.</span> <span class="nav-text">download</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-install"><span class="nav-number">2.</span> <span class="nav-text">yum install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-menuconfig"><span class="nav-number">3.</span> <span class="nav-text">make menuconfig</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make"><span class="nav-number">4.</span> <span class="nav-text">make</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reboot"><span class="nav-number">5.</span> <span class="nav-text">reboot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dev"><span class="nav-number">6.</span> <span class="nav-text">dev</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">7.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
             
 
           </div>
