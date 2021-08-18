@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dingxianye.me/"/>
-  <updated>2019-10-20T13:43:48.045Z</updated>
+  <updated>2021-08-18T13:53:33.040Z</updated>
   <id>http://dingxianye.me/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux内核-0x4 编译Kernel</title>
+    <link href="http://dingxianye.me/2021/08/17/0x4-Linux-KernelStarting-CompileKernel/"/>
+    <id>http://dingxianye.me/2021/08/17/0x4-Linux-KernelStarting-CompileKernel/</id>
+    <published>2021-08-16T21:33:58.419Z</published>
+    <updated>2021-08-18T13:53:33.040Z</updated>
+    
+    <content type="html"><![CDATA[<p>编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。</p><p>我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux localhost.localdomain </span><br><span class="line">4.18.0-305.12.1.el8_4.x86_64 #1 SMP Wed Aug 11 01:59:55 UTC 2021 </span><br><span class="line">x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p><p>可以看到内核版本是 <code>4.18.0-305.12.1.el8_4.x86_64</code>。</p><a id="more"></a><h1 id="download"><a href="#download" class="headerlink" title="download"></a>download</h1><p>下载linux内核source，在 <a href="https://www.kernel.org" target="_blank" rel="noopener">官网下载</a> 即可，随便选个版本，我选的是 5.13.11，我编译的时候最新的。</p><blockquote><p>内核版本更新比较快，完成这篇文章时，已经是 5.13.12 了，版本的编号有约定规则的，不过目前对我来说，不太重要，后面再说。</p></blockquote><h1 id="yum-install"><a href="#yum-install" class="headerlink" title="yum install"></a>yum install</h1><p>什么都不要说，上来就先 <code>sudo -u root yum install xxx</code>，我install了如下几个包就完事了：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">gcc</span><br><span class="line">ncurses-devel</span><br><span class="line">flex</span><br><span class="line">bison</span><br><span class="line">openssl-devel</span><br><span class="line">elfutils-libelf-devel</span><br></pre></td></tr></table></figure><blockquote><p>其实我是在make的时候，不断发现要install包，才能完成，直到我完成，我就install了上面那几个包。</p></blockquote><h1 id="make-menuconfig"><a href="#make-menuconfig" class="headerlink" title="make menuconfig"></a>make menuconfig</h1><p>利用系统已经存在的内核配置文件config文件可以方便的完成内核文件的配置，这个文件是隐藏的，执行以下命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-`uname -r` ./.config</span><br></pre></td></tr></table></figure></p><blockquote><p>如果不是第一次编译，可以首先执行这样一条语句：<br><code>make mrproper</code><br>将上一次编译的文件（.o .config）删除掉</p></blockquote><p>执行 <code>make menuconfig</code> 会弹出如下的界面：</p><p><img src="https://github.com/dingxianye/resources/blob/master/0x4-Linux-KernelStarting-CompileKernel/makemenuconfig.png?raw=true" alt="makemenuconfig"></p><p>最右下角是 <code>Load</code>，根据提示把 <code>.config</code> 文件选中导入，最后保存退出。</p><p>在config之后，make时发现一些错误，然后注释掉了下面的config</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> CONFIG_MODULE_SIG_KEY="certs/signing_key.pem"</span><br><span class="line"><span class="meta">#</span> CONFIG_SYSTEM_TRUSTED_KEYRING=y</span><br><span class="line"><span class="meta">#</span> CONFIG_SYSTEM_TRUSTED_KEYS="certs/rhel.pem"</span><br><span class="line"><span class="meta">#</span> CONFIG_DEBUG_INFO_BTF=y</span><br></pre></td></tr></table></figure><h1 id="make"><a href="#make" class="headerlink" title="make"></a>make</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 编译大内核，如果你想编译小内核，可以这样 make zImage</span><br><span class="line">make bzImage</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><blockquote><p>留个疑问，zImage和bzImage是什么关系呢？网上翻一翻，没看太明白，后面看明白了再补上……</p></blockquote><h1 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h1><p>完成编译，重启就ok了，uname信息是<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux localhost.localdomain </span><br><span class="line">5.13.11 #3 SMP Tue Aug 17 20:16:22 CST 2021 </span><br><span class="line">x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p><p>可以看到内核版本是 <code>5.13.11</code>。</p><h1 id="dev"><a href="#dev" class="headerlink" title="dev"></a>dev</h1><p>网上说，一般用得多的是 arch 和 drivers 目录下的内容，我暂时不知道更多，边学边写。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。&lt;/p&gt;
+&lt;p&gt;我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：&lt;br&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Linux localhost.localdomain &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4.18.0-305.12.1.el8_4.x86_64 #1 SMP Wed Aug 11 01:59:55 UTC 2021 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;x86_64 x86_64 x86_64 GNU/Linux&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以看到内核版本是 &lt;code&gt;4.18.0-305.12.1.el8_4.x86_64&lt;/code&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="操作系统内核" scheme="http://dingxianye.me/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8/"/>
+    
+      <category term="内核架构" scheme="http://dingxianye.me/tags/%E5%86%85%E6%A0%B8%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux内核-0x3 内核架构</title>
@@ -57,11 +81,11 @@
     </summary>
     
     
-      <category term="操作系统内核" scheme="http://dingxianye.me/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8/"/>
-    
       <category term="操作系统历史" scheme="http://dingxianye.me/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8E%86%E5%8F%B2/"/>
     
       <category term="开源协议" scheme="http://dingxianye.me/tags/%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="操作系统内核" scheme="http://dingxianye.me/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8/"/>
     
       <category term="书籍推荐" scheme="http://dingxianye.me/tags/%E4%B9%A6%E7%B1%8D%E6%8E%A8%E8%8D%90/"/>
     
