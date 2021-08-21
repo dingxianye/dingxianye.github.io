@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="操作系统历史,开源协议,操作系统内核,书籍推荐,">
+  <meta name="keywords" content="操作系统内核,内核架构,">
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="我觉得吧，想混一个领域，这个领域的行话，比如名词、基本概念、历史等，总要是了解和理解的。这里我会收集整理一些Linux内核和操作系统相关的概念名词等内容。好让我们看起来像是在这个领域混饭吃的人一样，毕竟我们的领域，会吹会说还是很重要的。 内容主要包含UNIX历史上的行话，各类看起来感觉很看不懂的名词和它们的关系，内核相关的概念，操作系统相关的概念等，推荐一些我在学习过程中看着还比较好的书。 当我看">
-<meta name="keywords" content="操作系统历史,开源协议,操作系统内核,书籍推荐">
+<meta name="description" content="编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。 我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：123Linux localhos">
+<meta name="keywords" content="操作系统内核,内核架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux内核-0x2 概念名词等">
-<meta property="og:url" content="http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts/index.html">
+<meta property="og:title" content="Linux内核-0x4 编译Kernel">
+<meta property="og:url" content="http://dingxianye.me/2021/08/17/LinuxKernel-0x4-KernelStarting-CompileKernel/index.html">
 <meta property="og:site_name" content="Dingxian.Ye">
-<meta property="og:description" content="我觉得吧，想混一个领域，这个领域的行话，比如名词、基本概念、历史等，总要是了解和理解的。这里我会收集整理一些Linux内核和操作系统相关的概念名词等内容。好让我们看起来像是在这个领域混饭吃的人一样，毕竟我们的领域，会吹会说还是很重要的。 内容主要包含UNIX历史上的行话，各类看起来感觉很看不懂的名词和它们的关系，内核相关的概念，操作系统相关的概念等，推荐一些我在学习过程中看着还比较好的书。 当我看">
+<meta property="og:description" content="编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。 我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：123Linux localhos">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-08-21T05:33:16.428Z">
+<meta property="og:image" content="https://github.com/dingxianye/resources/blob/master/0x4-Linux-KernelStarting-CompileKernel/makemenuconfig.png?raw=true">
+<meta property="og:updated_time" content="2021-08-21T06:51:53.265Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux内核-0x2 概念名词等">
-<meta name="twitter:description" content="我觉得吧，想混一个领域，这个领域的行话，比如名词、基本概念、历史等，总要是了解和理解的。这里我会收集整理一些Linux内核和操作系统相关的概念名词等内容。好让我们看起来像是在这个领域混饭吃的人一样，毕竟我们的领域，会吹会说还是很重要的。 内容主要包含UNIX历史上的行话，各类看起来感觉很看不懂的名词和它们的关系，内核相关的概念，操作系统相关的概念等，推荐一些我在学习过程中看着还比较好的书。 当我看">
+<meta name="twitter:title" content="Linux内核-0x4 编译Kernel">
+<meta name="twitter:description" content="编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。 我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：123Linux localhos">
+<meta name="twitter:image" content="https://github.com/dingxianye/resources/blob/master/0x4-Linux-KernelStarting-CompileKernel/makemenuconfig.png?raw=true">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts/">
+  <link rel="canonical" href="http://dingxianye.me/2021/08/17/LinuxKernel-0x4-KernelStarting-CompileKernel/">
 
 
 
 
 
-  <title>Linux内核-0x2 概念名词等 | Dingxian.Ye</title>
+  <title>Linux内核-0x4 编译Kernel | Dingxian.Ye</title>
   
 
 
@@ -265,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2019/10/06/0x2-Linux-KernelStarting-Concepts/">
+    <link itemprop="mainEntityOfPage" href="http://dingxianye.me/2021/08/17/LinuxKernel-0x4-KernelStarting-CompileKernel/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Derek">
@@ -282,7 +284,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Linux内核-0x2 概念名词等</h2>
+          <h2 class="post-title" itemprop="name headline">Linux内核-0x4 编译Kernel</h2>
         
 
         <div class="post-meta">
@@ -294,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T20:20:13+08:00">
-                2019-10-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-17T05:33:58+08:00">
+                2021-08-17
               </time>
             
 
@@ -346,8 +348,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/10/06/0x2-Linux-KernelStarting-Concepts/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/06/0x2-Linux-KernelStarting-Concepts/" itemprop="commentCount"></span>
+                <a href="/2021/08/17/LinuxKernel-0x4-KernelStarting-CompileKernel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/08/17/LinuxKernel-0x4-KernelStarting-CompileKernel/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -375,54 +377,39 @@
       
 
       
-        <p>我觉得吧，想混一个领域，这个领域的行话，比如名词、基本概念、历史等，总要是了解和理解的。这里我会收集整理一些Linux内核和操作系统相关的概念名词等内容。好让我们看起来像是在这个领域混饭吃的人一样，毕竟我们的领域，会吹会说还是很重要的。</p>
-<p>内容主要包含UNIX历史上的行话，各类看起来感觉很看不懂的名词和它们的关系，内核相关的概念，操作系统相关的概念等，推荐一些我在学习过程中看着还比较好的书。</p>
-<p>当我看到新的，或者收集到有趣的，就会不断的扩充进来，可能会变得很长很长，毕竟发展了几十年的领域，有太多有趣的东西了。</p>
+        <p>编译Linux Kernel是件很有意思的事，让我们有种要开始开车的感觉。刚刚开始学习Linux内核，基本上第一步应该就是说让我来用我的电脑编译一个Linux内核，然后替换掉原有内核。反正跟着网上的各种教程走，基本不会翻车。</p>
+<p>我是在CentOS的虚拟机上编译的，虚拟机是跑在最近刚刚整的一台最新的群晖Synology1821+的NAS，感觉性能还可以，具体版本如下：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux localhost.localdomain </span><br><span class="line">4.18.0-305.12.1.el8_4.x86_64 #1 SMP Wed Aug 11 01:59:55 UTC 2021 </span><br><span class="line">x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p>
+<p>可以看到内核版本是 <code>4.18.0-305.12.1.el8_4.x86_64</code>。</p>
 <a id="more"></a>
-<h1 id="领域内的行话"><a href="#领域内的行话" class="headerlink" title="领域内的行话"></a>领域内的行话</h1><h2 id="名词"><a href="#名词" class="headerlink" title="名词"></a>名词</h2><h3 id="GNU"><a href="#GNU" class="headerlink" title="GNU"></a>GNU</h3><p>GNU（GNU’s Not Unix）是由自由软件基金会 （Free SoftwareFoundation，FSF）发起的一个开源自由操作系统（软件）。</p>
-<p>GNU是一个操作系统（及一堆相关的软件），GNU建议安装的版本是GNU/Linux发行版。</p>
-<p>参考出处</p>
-<ul>
-<li><a href="http://www.gnu.org/" target="_blank" rel="noopener">《GNU是什么？》</a></li>
-<li><a href="https://blog.csdn.net/h270768095/article/details/9851149" target="_blank" rel="noopener">《什么叫做GNU》</a></li>
-</ul>
-<h3 id="POSIX标准"><a href="#POSIX标准" class="headerlink" title="POSIX标准"></a>POSIX标准</h3><p>POSIX的英文全称是<i>Portable Operating System Interface of UNIX</i>，中文译『可移植操作系统接口』。</p>
-<p>IEEE的一组标准组成，目标是提供一套大体上基于Unix的可移植操作系统标准。Linux尽力与POSIX和SUSv3兼容。早期的POSIX标准就是依照早期Unix系统的接口建立的。<sup><a href="#ref-1">[1]</a></sup></p>
-<h2 id="开源协议"><a href="#开源协议" class="headerlink" title="开源协议"></a>开源协议</h2><h3 id="GPL-LGPL-BSD-MIT-Apache"><a href="#GPL-LGPL-BSD-MIT-Apache" class="headerlink" title="GPL / LGPL / BSD / MIT / Apache"></a>GPL / LGPL / BSD / MIT / Apache</h3><p>参考<a href="http://www.ha97.com/833.html" target="_blank" rel="noopener">《五种开源协议的比较(BSD，Apache，GPL，LGPL，MIT)》</a>，已经讲得非常清楚了。大概情况是：</p>
-<p>1）GPL是GNU的，要求『代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用，但不允许修改后和衍生的代码做为闭源的商业软件发布和销售』，而且具有『传染性』，所有使用了GPL软件的软件均必须遵循GPL，这保证了开源自由免费的延续性；</p>
-<p>2）LGPL也是GNU的，同意引用LGPL类库的商业软件不需要开源代码，但是如果修改了LGPL的代码或衍生，则需要遵循LGPL；</p>
-<p>3）BSD/MIT/Apache均是商业友好的协议，只需要把原协议带上就可以进行任何的使用。</p>
-<p>OSI还有不少的开源协议，详见<a href="https://opensource.org/licenses/category" target="_blank" rel="noopener">《Open Source Licenses by Category》</a>。</p>
-<h3 id="WTFPL"><a href="#WTFPL" class="headerlink" title="WTFPL"></a>WTFPL</h3><p>协议的全名是 <em>Do What The Fuck You Want To Public License</em></p>
-<h2 id="操作系统内核"><a href="#操作系统内核" class="headerlink" title="操作系统内核"></a>操作系统内核</h2><h3 id="内核类型"><a href="#内核类型" class="headerlink" title="内核类型"></a>内核类型</h3><p><strong>宏内核，微内核，混合内核</strong>（部分微内核、部分宏内核）。</p>
-<p>对于内核类型，目前我看到的结论大概是，现代操作系统好像不能完全说是属于哪种类型的，可能都是混合型的，或者更偏向某种类型。另外是，微内核在实用操作系统上是比较少见的，更多是在科研阶段或教学场景下的。</p>
-<p><strong>宏内核</strong>类型中基本所有子系统如内存管理、文件系统、设备驱动等，都是在内核中的。这也是大部分操作系统内核构建的传统方法。<sup><a href="#ref-2">[2]</a></sup></p>
-<p><strong>微内核</strong>类型下只有最基本的功能在中心内核中实现，其它功能如文件系统、内存管理等可能在独立的进程中运行，并与中心内核进行通信<sup><a href="#ref-2">[2]</a></sup>。这种类型在各组件间的通信需要消耗CP宏内核系统来说会更耗费一些。</p>
-<p>我了解到过的系统，内核类型大概是这样的（<span style="color:red"><strong>不对的地方请指正</strong></span>）</p>
-<ul>
-<li>Linux（Ubuntu等）：Linux内核，宏内核</li>
-<li>MacOS：XNU内核，Mach（微）+ BSD（宏），混合内核</li>
-<li>Windows：或许是混合内核，Windows在内核的定义上或许不太能按UNIX类的系统来分</li>
-<li>Minix：微内核，作为教育用的操作系统</li>
-</ul>
-<p>我参考的一些文章如下：</p>
-<ul>
-<li><a href="https://itsfoss.com/mac-linux-difference/" target="_blank" rel="noopener">What is the Difference Between the macOS and Linux Kernels</a>，这边有个翻译版本 <a href="https://www.linuxprobe.com/linux-kernels-macos.html" target="_blank" rel="noopener">MacOS和Linux内核的区别</a></li>
-<li><a href="https://blog.csdn.net/broadview2006/article/details/4171397" target="_blank" rel="noopener">探究Windows内核你知多少</a>，这个文章排版比较乱，内容感觉还是有一定道理的</li>
-</ul>
-<h3 id="内核实现"><a href="#内核实现" class="headerlink" title="内核实现"></a>内核实现</h3><h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p>–</p>
-<h4 id="Mach"><a href="#Mach" class="headerlink" title="Mach"></a>Mach</h4><p>–</p>
-<h4 id="Hurd"><a href="#Hurd" class="headerlink" title="Hurd"></a>Hurd</h4><p>–</p>
-<h4 id="NewOS"><a href="#NewOS" class="headerlink" title="NewOS"></a>NewOS</h4><p>Haiku</p>
-<h4 id="ReactOS"><a href="#ReactOS" class="headerlink" title="ReactOS"></a><del>ReactOS</del></h4><p>–</p>
-<h1 id="名言金句"><a href="#名言金句" class="headerlink" title="名言金句"></a>名言金句</h1><ul>
-<li>UNIX的设计应该是提供机制而不是策略 <sup><a href="#ref-1">[1]</a></sup></li>
-</ul>
-<h1 id="书籍推荐"><a href="#书籍推荐" class="headerlink" title="书籍推荐"></a>书籍推荐</h1><ul>
-<li>《Linux内核设计与实现》<sup><a href="#ref-1">[1]</a></sup> 某些高校会用来当教材，可以看下豆瓣的评价，我觉得这本书是Linux内核入门的基本书籍，会带着你在内核核心部件的代码上走一圈。</li>
-</ul>
-<hr>
-<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><a name="ref-1"><sup>[1]</sup> Linux内核设计与实现（原书第3版）/（美）拉夫（Love，R）著；陈莉君，康华译.——北京：机械工业出版社，2011.6</a><br><a name="ref-2"><sup>[2]</sup> 深入Linux内核架构 / (德) 莫尔勒（Mauerer, W.）著；郭旭译.——北京：人展邮电出版社，2010.6</a></p>
+<h1 id="download"><a href="#download" class="headerlink" title="download"></a>download</h1><p>下载linux内核source，在 <a href="https://www.kernel.org" target="_blank" rel="noopener">官网下载</a> 即可，随便选个版本，我选的是 5.13.11，我编译的时候最新的。</p>
+<blockquote>
+<p>内核版本更新比较快，完成这篇文章时，已经是 5.13.12 了，版本的编号有约定规则的，不过目前对我来说，不太重要，后面再说。</p>
+</blockquote>
+<h1 id="yum-install"><a href="#yum-install" class="headerlink" title="yum install"></a>yum install</h1><p>什么都不要说，上来就先 <code>sudo -u root yum install xxx</code>，我install了如下几个包就完事了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">gcc</span><br><span class="line">ncurses-devel</span><br><span class="line">flex</span><br><span class="line">bison</span><br><span class="line">openssl-devel</span><br><span class="line">elfutils-libelf-devel</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其实我是在make的时候，不断发现要install包，才能完成，直到我完成，我就install了上面那几个包。</p>
+</blockquote>
+<h1 id="make-menuconfig"><a href="#make-menuconfig" class="headerlink" title="make menuconfig"></a>make menuconfig</h1><p>利用系统已经存在的内核配置文件config文件可以方便的完成内核文件的配置，这个文件是隐藏的，执行以下命令：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /boot/config-`uname -r` ./.config</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果不是第一次编译，可以首先执行这样一条语句：<br><code>make mrproper</code><br>将上一次编译的文件（.o .config）删除掉</p>
+</blockquote>
+<p>执行 <code>make menuconfig</code> 会弹出如下的界面：</p>
+<p><img src="https://github.com/dingxianye/resources/blob/master/0x4-Linux-KernelStarting-CompileKernel/makemenuconfig.png?raw=true" alt="makemenuconfig"></p>
+<p>最右下角是 <code>Load</code>，根据提示把 <code>.config</code> 文件选中导入，最后保存退出。</p>
+<p>在config之后，make时发现一些错误，然后注释掉了下面的config</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> CONFIG_MODULE_SIG_KEY=<span class="string">"certs/signing_key.pem"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CONFIG_SYSTEM_TRUSTED_KEYRING=y</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CONFIG_SYSTEM_TRUSTED_KEYS=<span class="string">"certs/rhel.pem"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CONFIG_DEBUG_INFO_BTF=y</span></span><br></pre></td></tr></table></figure>
+<h1 id="make"><a href="#make" class="headerlink" title="make"></a>make</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 编译大内核，如果你想编译小内核，可以这样 make zImage</span></span><br><span class="line">make bzImage</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>留个疑问，zImage和bzImage是什么关系呢？网上翻一翻，没看太明白，后面看明白了再补上……</p>
+</blockquote>
+<h1 id="reboot"><a href="#reboot" class="headerlink" title="reboot"></a>reboot</h1><p>完成编译，重启就ok了，uname信息是<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Linux localhost.localdomain </span><br><span class="line">5.13.11 #3 SMP Tue Aug 17 20:16:22 CST 2021 </span><br><span class="line">x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p>
+<p>可以看到内核版本是 <code>5.13.11</code>。</p>
+<h1 id="dev"><a href="#dev" class="headerlink" title="dev"></a>dev</h1><p>网上说，一般用得多的是 arch 和 drivers 目录下的内容，我暂时不知道更多，边学边写。</p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>我为什么要编译内核？或者，编译内核的『新生代农民工』们为什么要编译内核？往往事情是先有需求，再有动作的，编译内核有什么样的需求，行业大佬们要做什么，我在网上找了找，一般是下面几种情况：</p>
+<p>1）支撑业务需要裁剪内核，添加变更驱动，添加变更功能；</p>
+<p>2）学习内核需要。</p>
+<p>对于支撑业务，在行业中内核会有些什么样的作用呢？什么样的业务诉求需要做内核的定制呢？这个后面继续学习。</p>
 
       
     </div>
@@ -440,13 +427,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/操作系统历史/" rel="tag"># 操作系统历史</a>
-          
-            <a href="/tags/开源协议/" rel="tag"># 开源协议</a>
-          
             <a href="/tags/操作系统内核/" rel="tag"># 操作系统内核</a>
           
-            <a href="/tags/书籍推荐/" rel="tag"># 书籍推荐</a>
+            <a href="/tags/内核架构/" rel="tag"># 内核架构</a>
           
         </div>
       
@@ -459,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/06/0x1-Linux-KernelStarting-Index/" rel="next" title="Linux内核-0x1 源码索引">
-                <i class="fa fa-chevron-left"></i> Linux内核-0x1 源码索引
+              <a href="/2019/10/20/LinuxKernel-0x3-KernelStarting-KernelArch/" rel="next" title="Linux内核-0x3 内核架构">
+                <i class="fa fa-chevron-left"></i> Linux内核-0x3 内核架构
               </a>
             
           </div>
@@ -468,10 +451,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/20/0x3-Linux-KernelStarting-KernelArch/" rel="prev" title="Linux内核-0x3 内核架构">
-                Linux内核-0x3 内核架构 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -631,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#领域内的行话"><span class="nav-number">1.</span> <span class="nav-text">领域内的行话</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#名词"><span class="nav-number">1.1.</span> <span class="nav-text">名词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GNU"><span class="nav-number">1.1.1.</span> <span class="nav-text">GNU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POSIX标准"><span class="nav-number">1.1.2.</span> <span class="nav-text">POSIX标准</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开源协议"><span class="nav-number">1.2.</span> <span class="nav-text">开源协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GPL-LGPL-BSD-MIT-Apache"><span class="nav-number">1.2.1.</span> <span class="nav-text">GPL / LGPL / BSD / MIT / Apache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WTFPL"><span class="nav-number">1.2.2.</span> <span class="nav-text">WTFPL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统内核"><span class="nav-number">1.3.</span> <span class="nav-text">操作系统内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内核类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">内核类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内核实现"><span class="nav-number">1.3.2.</span> <span class="nav-text">内核实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mach"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Mach</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hurd"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">Hurd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NewOS"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">NewOS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactOS"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">ReactOS</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#名言金句"><span class="nav-number">2.</span> <span class="nav-text">名言金句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#书籍推荐"><span class="nav-number">3.</span> <span class="nav-text">书籍推荐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#download"><span class="nav-number">1.</span> <span class="nav-text">download</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-install"><span class="nav-number">2.</span> <span class="nav-text">yum install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-menuconfig"><span class="nav-number">3.</span> <span class="nav-text">make menuconfig</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make"><span class="nav-number">4.</span> <span class="nav-text">make</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reboot"><span class="nav-number">5.</span> <span class="nav-text">reboot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dev"><span class="nav-number">6.</span> <span class="nav-text">dev</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">7.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
             
 
           </div>
